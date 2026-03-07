@@ -4,582 +4,936 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Network+ Study Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap');
+:root {
+  --bg: #080b10;
+  --surface: #0d1117;
+  --surface2: #131920;
+  --surface3: #1a2230;
+  --border: #1e2d3d;
+  --border2: #2a3f55;
+  --accent: #00d4ff;
+  --accent2: #00ff9d;
+  --accent3: #ff6b35;
+  --accent4: #ffd700;
+  --text: #cdd9e5;
+  --text2: #8b9eb0;
+  --text3: #4a6070;
+  --red: #ff4757;
+  --glow: rgba(0,212,255,0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --border: #1e1e2e;
-    --accent: #00e5ff;
-    --accent2: #ff6b35;
-    --accent3: #a8ff3e;
-    --text: #e8e8f0;
-    --muted: #555570;
-    --done: #1a2a1a;
-    --done-border: #2a4a2a;
-  }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow Condensed', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none; z-index: 9999;
+}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* Grid bg */
+body::after {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
 
-  /* Grid background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+.wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px 80px;
-    position: relative;
-    z-index: 1;
-  }
+/* ── HEADER ── */
+header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+  position: relative;
+}
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.header-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  padding: 0.3rem 0.75rem;
+  border-radius: 2px;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: #fff;
+}
+header h1 span { color: var(--accent); }
+.header-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text2);
+  margin-top: 0.5rem;
+}
 
-  header {
-    margin-bottom: 48px;
-  }
+/* ── STATS BAR ── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.stat {
+  background: var(--surface);
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
+.stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.3rem;
+  display: block;
+}
 
-  .eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    opacity: 0.8;
-  }
+/* ── MASTER PROGRESS ── */
+.master-progress {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+.mp-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.mp-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text2); }
+.mp-pct { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+.progress-track {
+  height: 8px; background: var(--border); border-radius: 999px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 12px rgba(0,212,255,0.5);
+  width: 0%;
+}
 
-  h1 {
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-  }
+/* ── DOMAIN PILLS ── */
+.domain-bar {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+}
+.domain-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2px;
+  border: 1px solid;
+  cursor: default;
+  letter-spacing: 0.05em;
+}
 
-  h1 span {
-    color: var(--accent);
-    position: relative;
-  }
+/* ── TABS ── */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 2rem; overflow-x: auto; }
+.tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  padding: 0.75rem 1.25rem;
+  border: none; background: none; color: var(--text3);
+  cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  white-space: nowrap; transition: color 0.2s;
+}
+.tab:hover { color: var(--text2); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  .subtitle {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+/* ── WEEK PANEL ── */
+.week-panel { display: none; }
+.week-panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  /* Progress bar */
-  .progress-container {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px 24px;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
+.week-header {
+  display: flex; align-items: center; gap: 1.25rem;
+  margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.week-num {
+  font-size: 4rem; font-weight: 800; line-height: 1;
+  opacity: 0.12; font-family: 'Barlow Condensed', sans-serif;
+}
+.week-info { flex: 1; }
+.week-title { font-size: 1.3rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 0.25rem; }
+.week-goal { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text2); }
+.week-progress-mini {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text3);
+  background: var(--surface2); border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem; border-radius: 4px; white-space: nowrap;
+}
 
-  .progress-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-  }
+/* ── DAY CARDS ── */
+.day-grid { display: flex; flex-direction: column; gap: 0.5rem; }
 
-  .progress-bar-wrap {
-    flex: 1;
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+.day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.day-card:hover { border-color: var(--border2); transform: translateX(2px); }
+.day-card.completed { background: #0a1a12; border-color: #1a3a22; }
+.day-card.rest { opacity: 0.6; }
 
-  .progress-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent3));
-    border-radius: 2px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0%;
-  }
+.day-header {
+  display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+.day-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; font-weight: 700;
+  width: 32px; text-align: center;
+  padding: 0.25rem 0;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.day-title-wrap { flex: 1; }
+.day-title { font-size: 0.95rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+.day-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 0.63rem; color: var(--text3); margin-top: 0.1rem; }
 
-  .progress-count {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    white-space: nowrap;
-    min-width: 60px;
-    text-align: right;
-  }
+.day-check {
+  width: 24px; height: 24px; border-radius: 4px;
+  border: 2px solid var(--border2);
+  background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s;
+}
+.day-check:hover { border-color: var(--accent2); }
+.day-card.completed .day-check { background: var(--accent2); border-color: var(--accent2); }
+.checkmark { display: none; color: #000; font-size: 0.75rem; font-weight: 700; }
+.day-card.completed .checkmark { display: block; }
 
-  /* Week sections */
-  .week {
-    margin-bottom: 36px;
-  }
+.day-body {
+  display: none;
+  padding: 0 1rem 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
+.day-card.open .day-body { display: block; }
 
-  .week-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
-    cursor: pointer;
-    user-select: none;
-  }
+.day-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+@media (max-width: 600px) { .day-cols { grid-template-columns: 1fr; } }
 
-  .week-number {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--accent2);
-    text-transform: uppercase;
-  }
+.day-col-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+}
+.day-col-val {
+  font-size: 0.88rem; color: var(--text2); line-height: 1.5;
+}
+.day-col-val.videos { color: var(--accent); }
+.day-col-val.practice { color: var(--accent2); }
+.day-col-val.notes { color: #b0a0ff; }
+.day-col-val.rest-text { color: var(--text3); font-style: italic; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
 
-  .week-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text);
-    flex: 1;
-  }
+/* ── EXAM TRACKER TAB ── */
+.exam-tracker { max-width: 800px; }
+.exam-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px 100px;
+  gap: 1px; background: var(--border);
+  margin-bottom: 0;
+}
+.exam-row:first-child { border-radius: 6px 6px 0 0; }
+.exam-row:last-child { border-radius: 0 0 6px 6px; }
+.exam-table { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 2rem; }
+.exam-thead .exam-cell {
+  background: var(--surface2);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.6rem 1rem;
+}
+.exam-cell {
+  background: var(--surface);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+}
+.exam-cell.week-cell { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text3); }
+.exam-cell.exam-name { color: var(--text); font-weight: 600; }
+.exam-cell.target { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent4); }
 
-  .week-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    padding: 3px 10px;
-    border-radius: 2px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+.score-input {
+  width: 100%; background: var(--surface3);
+  border: 1px solid var(--border2); border-radius: 3px;
+  color: var(--accent2); font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; padding: 0.25rem 0.5rem;
+  outline: none; text-align: center;
+  transition: border-color 0.2s;
+}
+.score-input:focus { border-color: var(--accent2); box-shadow: 0 0 8px rgba(0,255,157,0.2); }
+.score-input.pass { color: var(--accent2); }
+.score-input.fail { color: var(--red); }
 
-  .week-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+/* ── PORTS REFERENCE ── */
+.ports-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.5rem;
+  margin-top: 1rem;
+}
+.port-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.75rem 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  transition: border-color 0.2s;
+}
+.port-card:hover { border-color: var(--border2); }
+.port-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700;
+  color: var(--accent); min-width: 52px; text-align: right;
+  background: rgba(0,212,255,0.07); padding: 0.25rem 0.5rem; border-radius: 3px;
+}
+.port-info { flex: 1; }
+.port-proto { font-size: 0.92rem; font-weight: 700; color: #fff; }
+.port-desc { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text3); margin-top: 0.1rem; }
 
-  /* Day cards */
-  .days-grid {
-    display: grid;
-    gap: 8px;
-  }
+/* ── SEARCH ── */
+.search-wrap { position: relative; margin-bottom: 1rem; }
+.search-input {
+  width: 100%; background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 6px; padding: 0.65rem 1rem 0.65rem 2.5rem;
+  color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+  outline: none; transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent); box-shadow: 0 0 12px var(--glow); }
+.search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 0.8rem; }
 
-  .day-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 16px 20px;
-    display: grid;
-    grid-template-columns: 80px 1fr auto;
-    align-items: center;
-    gap: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-  }
+/* ── SUBNET TABLE ── */
+.subnet-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: 'JetBrains Mono', monospace; }
+.subnet-table th { background: var(--surface2); color: var(--text3); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+.subnet-table td { padding: 0.6rem 1rem; font-size: 0.8rem; border-bottom: 1px solid var(--border); }
+.subnet-table tr:last-child td { border-bottom: none; }
+.subnet-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.subnet-table td:first-child { color: var(--accent); font-weight: 700; }
+.subnet-table td:nth-child(2) { color: var(--text2); }
+.subnet-table td:nth-child(3) { color: var(--accent2); }
+.subnet-table td:nth-child(4) { color: var(--text3); }
 
-  .day-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--accent);
-    transform: scaleY(0);
-    transition: transform 0.2s ease;
-    transform-origin: bottom;
-  }
+/* ── SECTION TITLES ── */
+.section-title {
+  font-size: 1.1rem; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  .day-card:hover {
-    border-color: rgba(0,229,255,0.3);
-    background: #14141e;
-  }
+/* ── WEEK COMPLETE BANNER ── */
+.week-complete {
+  display: none; background: linear-gradient(90deg, #0a2a18, #0d1f12);
+  border: 1px solid #2a5a30; border-radius: 6px; padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem; align-items: center; gap: 1rem;
+}
+.week-complete.show { display: flex; }
+.wc-icon { font-size: 1.5rem; }
+.wc-text { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent2); }
 
-  .day-card:hover::before {
-    transform: scaleY(1);
-  }
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-  .day-card.completed {
-    background: var(--done);
-    border-color: var(--done-border);
-    opacity: 0.75;
-  }
-
-  .day-card.completed::before {
-    background: var(--accent3);
-    transform: scaleY(1);
-  }
-
-  .day-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-
-  .day-content h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--text);
-    transition: color 0.2s;
-  }
-
-  .day-card:hover .day-content h3 {
-    color: var(--accent);
-  }
-
-  .day-card.completed .day-content h3 {
-    color: var(--muted);
-    text-decoration: line-through;
-  }
-
-  .day-breakdown {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-    line-height: 1.6;
-  }
-
-  .day-breakdown span {
-    color: rgba(0,229,255,0.5);
-    margin-right: 6px;
-  }
-
-  .day-check {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-  }
-
-  .day-card:hover .day-check {
-    border-color: var(--accent);
-  }
-
-  .day-card.completed .day-check {
-    background: var(--accent3);
-    border-color: var(--accent3);
-  }
-
-  .day-check svg {
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .day-card.completed .day-check svg {
-    opacity: 1;
-  }
-
-  /* Domain legend */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .legend-item {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .legend-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-  }
-
-  /* Reset button */
-  .reset-btn {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 32px;
-    border-radius: 2px;
-  }
-
-  .reset-btn:hover {
-    border-color: var(--accent2);
-    color: var(--accent2);
-  }
-
-  /* Domain tags */
-  .domain-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    padding: 2px 7px;
-    border-radius: 2px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-top: 4px;
-  }
-
-  .tag-net { background: rgba(0,229,255,0.08); color: rgba(0,229,255,0.6); }
-  .tag-sec { background: rgba(255,107,53,0.08); color: rgba(255,107,53,0.6); }
-  .tag-infra { background: rgba(168,255,62,0.08); color: rgba(168,255,62,0.6); }
-  .tag-ops { background: rgba(180,130,255,0.08); color: rgba(180,130,255,0.6); }
-  .tag-review { background: rgba(255,220,50,0.08); color: rgba(255,220,50,0.6); }
-
-  @media (max-width: 600px) {
-    .day-card { grid-template-columns: 60px 1fr auto; gap: 12px; }
-    .day-breakdown { display: none; }
-  }
+/* ── ANIMATIONS ── */
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+.blink { animation: pulse 1.5s ease-in-out infinite; }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
+  <!-- HEADER -->
   <header>
-    <p class="eyebrow">// CompTIA Certification Prep</p>
-    <h1>Network<span>+</span> Daily<br>Study Plan</h1>
-    <p class="subtitle">1 hour/day · 5 weeks · N10-009 Exam Domains</p>
+    <div class="header-badge">// N10-009 Study Tracker</div>
+    <div class="header-top">
+      <div>
+        <h1>Network<span>+</span> Study Plan</h1>
+        <div class="header-sub">6 weeks · 1.5–2 hrs/day · Professor Messer + Jason Dion</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);text-align:right;line-height:1.8;">
+        <span class="blink" style="color:var(--accent2);">●</span> ACTIVE<br>
+        <span id="currentDate"></span>
+      </div>
+    </div>
   </header>
 
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#00e5ff"></div>Networking Concepts</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#ff6b35"></div>Network Security</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#a8ff3e"></div>Network Infrastructure</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#b482ff"></div>Network Operations</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#ffdc32"></div>Review / Practice</div>
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val" id="statDays">0</span><span class="stat-label">Days Done</span></div>
+    <div class="stat"><span class="stat-val" id="statTotal">36</span><span class="stat-label">Total Days</span></div>
+    <div class="stat"><span class="stat-val" id="statWeek">—</span><span class="stat-label">Current Week</span></div>
+    <div class="stat"><span class="stat-val" id="statExams">0</span><span class="stat-label">Exams Logged</span></div>
+    <div class="stat"><span class="stat-val" id="statAvg">—</span><span class="stat-label">Avg Score</span></div>
   </div>
 
-  <div class="progress-container">
-    <span class="progress-label">Overall Progress</span>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progressFill"></div>
+  <!-- MASTER PROGRESS -->
+  <div class="master-progress">
+    <div class="mp-top">
+      <span class="mp-label">OVERALL PROGRESS</span>
+      <span class="mp-pct" id="masterPct">0%</span>
     </div>
-    <span class="progress-count" id="progressCount">0 / 35</span>
+    <div class="progress-track"><div class="progress-fill" id="masterFill"></div></div>
   </div>
 
-  <div id="weeks-container"></div>
+  <!-- DOMAIN PILLS -->
+  <div class="domain-bar" id="domainPills"></div>
 
-  <button class="reset-btn" onclick="resetAll()">↺ Reset All Progress</button>
+  <!-- TABS -->
+  <div class="tabs" id="tabBar"></div>
+
+  <!-- WEEK PANELS -->
+  <div id="panels"></div>
+
+  <!-- EXAM TRACKER PANEL -->
+  <div class="week-panel" id="panel-exams">
+    <div class="section-title">Practice Exam Score Tracker</div>
+    <div class="exam-tracker">
+      <div class="exam-table" id="examTable"></div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);margin-top:0.75rem;">
+        Target: Dion exams are harder than the real thing. 85%+ on Dion ≈ ready to book. Pass score on real exam: 720/900.
+      </p>
+    </div>
+  </div>
+
+  <!-- PORTS PANEL -->
+  <div class="week-panel" id="panel-ports">
+    <div class="section-title">Ports &amp; Protocols Reference</div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="portSearch" type="text" placeholder="Search protocol or port number...">
+    </div>
+    <div class="ports-grid" id="portsGrid"></div>
+  </div>
+
+  <!-- SUBNETS PANEL -->
+  <div class="week-panel" id="panel-subnet">
+    <div class="section-title">Subnetting Quick Reference</div>
+    <table class="subnet-table">
+      <thead><tr><th>CIDR</th><th>Subnet Mask</th><th>Usable Hosts</th><th>Common Use</th></tr></thead>
+      <tbody id="subnetBody"></tbody>
+    </table>
+    <div style="margin-top:2rem;">
+      <div class="section-title">Subnetting Formula</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text2);line-height:2;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;">
+        <span style="color:var(--accent);">Hosts per subnet</span> = 2^(32 - prefix) - 2<br>
+        <span style="color:var(--accent);">Number of subnets</span> = 2^(borrowed bits)<br>
+        <span style="color:var(--accent);">Network address</span> = first IP in block (all host bits = 0)<br>
+        <span style="color:var(--accent);">Broadcast address</span> = last IP in block (all host bits = 1)<br>
+        <span style="color:var(--accent);">Block size</span> = 256 - subnet mask octet
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <script>
-const plan = [
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const WEEKS = [
   {
-    week: 1,
-    title: "Networking Fundamentals",
+    num: 1, color: "#00d4ff",
+    title: "Networking Concepts & IP Fundamentals",
+    domain: "Domain 1.0 — Networking Concepts",
+    goal: "Build rock-solid OSI, TCP/IP, subnetting, and core protocol foundations.",
     days: [
-      { label: "Day 1", topic: "OSI & TCP/IP Models", tag: "net", breakdown: ["20min — OSI layers deep dive", "20min — TCP/IP model + comparison", "20min — Flashcards + quiz"] },
-      { label: "Day 2", topic: "IP Addressing & Subnetting", tag: "net", breakdown: ["15min — IPv4 classes & CIDR review", "25min — Subnetting practice (10 problems)", "20min — VLSM concepts"] },
-      { label: "Day 3", topic: "IPv6 & Address Types", tag: "net", breakdown: ["20min — IPv6 structure & notation", "20min — Address types (unicast/multicast/anycast)", "20min — IPv4 to IPv6 transition methods"] },
-      { label: "Day 4", topic: "Ports, Protocols & Services", tag: "net", breakdown: ["25min — Common ports (DNS/HTTP/HTTPS/SSH/RDP/etc)", "20min — TCP vs UDP use cases", "15min — Protocol flashcard drill"] },
-      { label: "Day 5", topic: "Network Topologies & Media", tag: "infra", breakdown: ["20min — Star/mesh/bus/ring/hybrid", "20min — Cable types (Cat5e/6/6a, fiber, coax)", "20min — Connector types & standards"] },
+      { day:"MON", title:"OSI Model & Network Topologies", videos:"OSI Model & Encapsulation; Network Topologies (star, mesh, bus, ring)", notes:"Draw OSI layers from memory — all 7, all acronyms", practice:"—" },
+      { day:"TUE", title:"TCP/UDP & Core Ports", videos:"TCP vs UDP; Common Ports (SSH 22, DNS 53, HTTP 80, HTTPS 443, DHCP 67/68, RDP 3389)", notes:"Port number flashcards — learn 20 essential ports this session", practice:"—" },
+      { day:"WED", title:"IPv4 Addressing & Subnetting", videos:"IPv4 Addressing; Subnetting; CIDR Notation; VLSM", notes:"Do 10 subnetting practice problems before bed", practice:"—" },
+      { day:"THU", title:"IPv6 & NAT", videos:"IPv6 Addressing; Private vs Public IPs; NAT/PAT; RFC 1918 ranges", notes:"Compare IPv4 vs IPv6 headers side-by-side in notes", practice:"—" },
+      { day:"FRI", title:"DNS, DHCP, NTP, SNMP", videos:"DNS deep dive (records: A, AAAA, MX, CNAME, PTR); DHCP process (DORA); NTP; SNMP basics", notes:"Trace a full DNS resolution end-to-end in notes", practice:"—" },
+      { day:"SAT", title:"Cloud & Virtualization + Review", videos:"Cloud concepts (IaaS/PaaS/SaaS/DaaS); Virtualization; SDN overview", notes:"Full week notes review, flag anything unclear", practice:"Messer Domain 1 practice questions" },
+      { day:"SUN", title:"Rest Day", videos:"—", notes:"REST DAY — light flashcard review only if you want", practice:"—", rest:true },
     ]
   },
   {
-    week: 2,
-    title: "Network Infrastructure",
+    num: 2, color: "#00ff9d",
+    title: "Network Implementation — Switching, Routing & Wireless",
+    domain: "Domain 2.0 — Network Implementation",
+    goal: "Understand how data physically and logically moves across a real network.",
     days: [
-      { label: "Day 6", topic: "Switching Concepts", tag: "infra", breakdown: ["20min — VLANs, trunking, 802.1Q", "20min — STP / RSTP operation", "20min — Port security & MAC tables"] },
-      { label: "Day 7", topic: "Routing Fundamentals", tag: "infra", breakdown: ["20min — Static vs dynamic routing", "20min — OSPF & RIP basics", "20min — Route tables & next-hop logic"] },
-      { label: "Day 8", topic: "Wireless Networking", tag: "infra", breakdown: ["20min — 802.11 standards (a/b/g/n/ac/ax)", "20min — Channels, SSID, WPA2/WPA3", "20min — Wireless deployment modes (AP/mesh)"] },
-      { label: "Day 9", topic: "Cloud & Virtualization", tag: "infra", breakdown: ["20min — IaaS/PaaS/SaaS models", "20min — VMs, containers, hypervisors", "20min — SDN & virtual networking basics"] },
-      { label: "Day 10", topic: "WAN Technologies", tag: "infra", breakdown: ["20min — MPLS, SD-WAN, leased lines", "20min — VPN types (site-to-site, remote access)", "20min — QoS concepts"] },
+      { day:"MON", title:"Cabling & Physical Layer", videos:"Ethernet Standards; Cabling (Cat5e/6/6a, fiber types, SFP/SFP+); Connectors", notes:"Create cable type cheat sheet — speed, max distance, use case", practice:"—" },
+      { day:"TUE", title:"Switching, VLANs & STP", videos:"Switching concepts; VLANs; Trunking (802.1Q); STP/RSTP; Port mirroring", notes:"Draw a VLAN topology with trunk and access ports", practice:"—" },
+      { day:"WED", title:"Routing Fundamentals", videos:"Routing concepts; Static routes; Default gateway; ARP; Routing tables", notes:"Trace a packet hop-by-hop across 3 routers in notes", practice:"—" },
+      { day:"THU", title:"Dynamic Routing Protocols", videos:"OSPF; BGP; EIGRP (overview); Route redistribution; AD values", notes:"Comparison table: OSPF vs BGP vs EIGRP (use case, type, AD)", practice:"—" },
+      { day:"FRI", title:"Wireless Standards & Config", videos:"802.11 a/b/g/n/ac/ax — speeds, frequencies, channels; SSID/BSSID; MIMO", notes:"Frequency band comparison: 2.4 GHz vs 5 GHz vs 6 GHz", practice:"—" },
+      { day:"SAT", title:"Wireless Security + Week Review", videos:"WAP placement; WPA2/WPA3; RADIUS for wireless; EAP types; Cellular basics (LTE/5G)", notes:"Review week notes, look up any flagged topics in Messer notes PDF", practice:"Messer Domain 2 practice questions" },
+      { day:"SUN", title:"Rest Day", videos:"—", notes:"REST DAY", practice:"—", rest:true },
     ]
   },
   {
-    week: 3,
-    title: "Network Operations",
+    num: 3, color: "#ffd700",
+    title: "Network Operations & First Practice Exam",
+    domain: "Domain 3.0 — Network Operations",
+    goal: "Cover monitoring, DR, and documentation — then take your first full Dion exam Saturday.",
     days: [
-      { label: "Day 11", topic: "DNS & DHCP", tag: "ops", breakdown: ["20min — DNS records (A/AAAA/MX/CNAME/PTR/SOA)", "20min — DNS hierarchy & resolution process", "20min — DHCP scope, reservations, relay agents"] },
-      { label: "Day 12", topic: "Network Monitoring & Tools", tag: "ops", breakdown: ["20min — SNMP, NetFlow, syslog, NTP", "20min — Ping, traceroute, nslookup, netstat, ipconfig", "20min — Packet capture basics (Wireshark)"] },
-      { label: "Day 13", topic: "Documentation & Policies", tag: "ops", breakdown: ["20min — Network diagrams (logical vs physical)", "20min — Change management & ITIL basics", "20min — SLAs, MOU, DRP concepts"] },
-      { label: "Day 14", topic: "High Availability & Disaster Recovery", tag: "ops", breakdown: ["20min — FHRP (HSRP/VRRP), load balancing", "20min — Backup types & RTO/RPO", "20min — Redundancy & failover strategies"] },
-      { label: "Day 15", topic: "Troubleshooting Methodology", tag: "ops", breakdown: ["20min — CompTIA 7-step troubleshooting model", "20min — OSI-layer based troubleshooting", "20min — Scenario-based drill (5 scenarios)"] },
+      { day:"MON", title:"Network Monitoring & SNMP", videos:"Network monitoring; SNMP v1/v2c/v3; Traps; MIBs; OIDs; Syslog levels", notes:"List SNMP versions and security differences", practice:"—" },
+      { day:"TUE", title:"NetFlow, Logs & Baselines", videos:"NetFlow/IPFIX; Packet capture; Log analysis; Establishing baselines", notes:"What tools produce what output — comparison chart", practice:"—" },
+      { day:"WED", title:"High Availability & Redundancy", videos:"HA concepts; Load balancing (L4/L7); NIC teaming; FHRP (HSRP/VRRP/GLBP)", notes:"Compare active/active vs active/passive HA", practice:"—" },
+      { day:"THU", title:"Disaster Recovery & Backups", videos:"DR concepts; RTO vs RPO; Backup types (full/incremental/differential); Business continuity", notes:"Create a DR terminology sheet — RTO, RPO, MTTR, MTBF", practice:"—" },
+      { day:"FRI", title:"Documentation & Policies", videos:"Network documentation; Diagrams (logical vs physical); Change management; MOU/SLA/NDA", notes:"Review and flag any gaps across Weeks 1–3", practice:"—" },
+      { day:"SAT", title:"⚡ DION EXAM 1 — First Attempt", videos:"—", notes:"Timed, full exam conditions — no pausing, no googling. Score doesn't matter yet.", practice:"Dion Practice Exam 1 (timed — 90 min)" },
+      { day:"SUN", title:"Exam 1 Review", videos:"—", notes:"Review EVERY wrong answer. Look up each topic in Messer videos. Mark weak domains.", practice:"Score analysis + gap mapping" },
     ]
   },
   {
-    week: 4,
+    num: 4, color: "#ff6b35",
     title: "Network Security",
+    domain: "Domain 4.0 — Network Security",
+    goal: "Master security concepts and push Dion practice exam scores to 75%+.",
     days: [
-      { label: "Day 16", topic: "Security Concepts & Threats", tag: "sec", breakdown: ["20min — CIA triad, AAA, zero trust", "20min — Common attacks (MITM, DoS, phishing, spoofing)", "20min — Social engineering awareness"] },
-      { label: "Day 17", topic: "Firewalls & IDS/IPS", tag: "sec", breakdown: ["20min — Stateful vs stateless firewalls", "20min — IDS vs IPS, signature vs anomaly", "20min — DMZ, screened subnet architecture"] },
-      { label: "Day 18", topic: "VPNs & Remote Access Security", tag: "sec", breakdown: ["20min — IPSec (AH/ESP/IKE), SSL/TLS VPN", "20min — Split tunneling, full tunnel", "20min — MFA, RADIUS, TACACS+"] },
-      { label: "Day 19", topic: "Wireless Security", tag: "sec", breakdown: ["20min — WEP/WPA/WPA2/WPA3 comparison", "20min — 802.1X, EAP types", "20min — Rogue APs, evil twin, deauth attacks"] },
-      { label: "Day 20", topic: "Physical Security & Policies", tag: "sec", breakdown: ["20min — Network access control (NAC)", "20min — Physical security (locks, cameras, mantrap)", "20min — Security policies & incident response"] },
+      { day:"MON", title:"Network Attacks", videos:"DoS/DDoS; MITM; VLAN hopping; ARP spoofing; DNS poisoning; Replay attacks; Rogue DHCP", notes:"Attack flashcards — attack name → how it works → mitigation", practice:"—" },
+      { day:"TUE", title:"Network Hardening", videos:"Port security; DHCP snooping; Dynamic ARP Inspection (DAI); 802.1X; BPDU guard", notes:"Build a switch hardening checklist", practice:"—" },
+      { day:"WED", title:"Firewalls & IDS/IPS", videos:"Stateful vs stateless firewalls; ACLs; IDS vs IPS; UTM; Next-gen firewalls; Honeypots", notes:"Draw a multi-zone firewall diagram (WAN/DMZ/LAN)", practice:"—" },
+      { day:"THU", title:"VPNs & Zero Trust", videos:"IPSec (AH/ESP/IKE); SSL/TLS VPN; Site-to-site vs remote access; Split tunneling; Zero Trust; SASE", notes:"Compare IPSec vs SSL VPN — use cases, protocols, ports", practice:"—" },
+      { day:"FRI", title:"AAA & PKI", videos:"AAA framework; RADIUS vs TACACS+; PKI basics; Digital certificates; MFA types", notes:"Auth method comparison table", practice:"—" },
+      { day:"SAT", title:"⚡ Exam 1 Retake + Exam 2", videos:"—", notes:"Retake Exam 1 first (should see improvement). Then attempt Exam 2.", practice:"Dion Exam 1 retake + Dion Exam 2" },
+      { day:"SUN", title:"Rest + Score Analysis", videos:"—", notes:"REST DAY — review both exam analyses, note weak areas for Week 5", practice:"Score review" },
     ]
   },
   {
-    week: 5,
-    title: "Review & Exam Prep",
+    num: 5, color: "#b06aff",
+    title: "Network Troubleshooting",
+    domain: "Domain 5.0 — Network Troubleshooting",
+    goal: "Lock in the troubleshooting methodology and get scores consistently above 80%.",
     days: [
-      { label: "Day 21", topic: "Domain 1 Review — Networking Concepts", tag: "review", breakdown: ["30min — Jason Dion/Professor Messer review video", "30min — Practice questions (20 Q)"] },
-      { label: "Day 22", topic: "Domain 2 Review — Infrastructure", tag: "review", breakdown: ["30min — Review weak spots from Week 2", "30min — Practice questions (20 Q)"] },
-      { label: "Day 23", topic: "Domain 3+4 Review — Ops & Security", tag: "review", breakdown: ["30min — Key ops and security concepts", "30min — Practice questions (20 Q)"] },
-      { label: "Day 24", topic: "Full Practice Exam #1", tag: "review", breakdown: ["60min — Full timed practice exam (90 Q)", "Note: Review wrong answers after"] },
-      { label: "Day 25", topic: "Weak Area Deep Dive", tag: "review", breakdown: ["20min — Identify 3 weakest topics from exam", "25min — Focused study on those topics", "15min — Re-drill those question types"] },
-      { label: "Day 26", topic: "Performance-Based Questions (PBQ)", tag: "review", breakdown: ["30min — Subnetting PBQ drills", "30min — Drag-and-drop & simlet practice"] },
-      { label: "Day 27", topic: "Acronym & Port Number Blitz", tag: "review", breakdown: ["20min — All ports flashcard drill", "20min — All acronyms (OSI, protocols, standards)", "20min — Quick recall quiz"] },
-      { label: "Day 28", topic: "Full Practice Exam #2", tag: "review", breakdown: ["60min — Second full timed practice exam", "Focus: speed + accuracy"] },
-      { label: "Day 29", topic: "Final Weak Spot Review", tag: "review", breakdown: ["60min — Study anything still below 80%", "Light review only — no new material"] },
-      { label: "Day 30", topic: "Day Before Exam — Light Review", tag: "review", breakdown: ["20min — Skim notes & key concepts", "20min — Port/protocol flashcards", "20min — Rest. You're ready."] },
+      { day:"MON", title:"Troubleshooting Methodology", videos:"CompTIA 7-step troubleshooting model; OSI-based troubleshooting approach", notes:"Memorize the 7 steps cold — write them out 3x", practice:"—" },
+      { day:"TUE", title:"CLI Troubleshooting Tools", videos:"ping; tracert/traceroute; nslookup/dig; ipconfig/ifconfig; netstat; arp; route", notes:"Run every single tool in your home lab (Proxmox/Ubuntu)", practice:"—" },
+      { day:"WED", title:"Packet Capture & Wireshark", videos:"Wireshark basics; Capture filters vs display filters; Protocol analysis; tcpdump", notes:"Capture DNS and HTTP traffic in Proxmox lab — analyze it", practice:"—" },
+      { day:"THU", title:"Wireless & Hardware Tools", videos:"Wireless troubleshooting; Signal/interference issues; Channel overlap; WiFi analyzers", notes:"Review wireless scenario-based troubleshooting questions", practice:"—" },
+      { day:"FRI", title:"Physical & Layer 2 Troubleshooting", videos:"Cable testers; TDR/OTDR; PoE issues; Switching faults; Duplex mismatches; STP issues", notes:"Hardware tool use cases — what tool solves what problem", practice:"—" },
+      { day:"SAT", title:"⚡ Exam 2 Retake + Exam 3", videos:"—", notes:"Full timed exams — push hard for 80%+. Take a break between exams.", practice:"Dion Exam 2 retake + Dion Exam 3" },
+      { day:"SUN", title:"Targeted Domain Review", videos:"Re-watch Messer videos for any domain where you scored below 75%", notes:"Focused review only on your weakest domains from exam analysis", practice:"Targeted weak area review" },
+    ]
+  },
+  {
+    num: 6, color: "#00d4ff",
+    title: "Final Review & Exam Simulation",
+    domain: "All Domains — Final Consolidation",
+    goal: "Simulate real exam conditions. 85%+ on Dion = book the real exam.",
+    days: [
+      { day:"MON", title:"Weak Topic Blitz", videos:"Re-watch any Messer videos on topics you're still unsure about — prioritize flagged items", notes:"Final notes consolidation — one master cheat sheet", practice:"—" },
+      { day:"TUE", title:"Performance-Based Questions", videos:"Messer PBQ video series — drag-and-drop, simlets, matching, network diagram questions", notes:"Practice PBQ-style questions — these appear first on the real exam", practice:"—" },
+      { day:"WED", title:"⚡ Dion Exam 4", videos:"—", notes:"Full simulation — timed, no pauses, treat it like the real thing", practice:"Dion Practice Exam 4 (timed)" },
+      { day:"THU", title:"Final Error Review", videos:"—", notes:"Review exam errors. Light reading only — don't introduce new topics.", practice:"Score analysis + targeted flashcards" },
+      { day:"FRI", title:"⚡ Final Simulation — Exam 5", videos:"—", notes:"FINAL DRESS REHEARSAL — exam conditions, no phone, no pausing", practice:"Dion Practice Exam 5 (final simulation)" },
+      { day:"SAT", title:"Messer Final Exam + Light Review", videos:"—", notes:"Light review only — no cramming. Review your master cheat sheet. REST UP.", practice:"Professor Messer final practice exam" },
+      { day:"SUN", title:"🎯 EXAM DAY", videos:"—", notes:"You are ready. Light breakfast. Arrive/log in 15 min early. You have done the work.", practice:"— TAKE THE REAL EXAM —", rest:false, examDay:true },
     ]
   }
 ];
 
-const tagColors = {
-  net: 'tag-net',
-  sec: 'tag-sec',
-  infra: 'tag-infra',
-  ops: 'tag-ops',
-  review: 'tag-review'
-};
+const DOMAINS = [
+  { label: "1.0 Networking Concepts", pct: "23%", color: "#00d4ff", weeks: "1–2" },
+  { label: "2.0 Network Implementation", pct: "20%", color: "#00ff9d", weeks: "2–3" },
+  { label: "3.0 Network Operations", pct: "17%", color: "#ffd700", weeks: "3–4" },
+  { label: "4.0 Network Security", pct: "20%", color: "#ff6b35", weeks: "4–5" },
+  { label: "5.0 Network Troubleshooting", pct: "20%", color: "#b06aff", weeks: "5–6" },
+];
 
-const tagLabels = {
-  net: 'Networking',
-  sec: 'Security',
-  infra: 'Infrastructure',
-  ops: 'Operations',
-  review: 'Review'
-};
+const EXAMS = [
+  { week:"Wk 3", name:"Dion Exam 1 — First Attempt", target:65, id:"e1a" },
+  { week:"Wk 4", name:"Dion Exam 1 — Retake", target:75, id:"e1b" },
+  { week:"Wk 4", name:"Dion Exam 2 — First Attempt", target:70, id:"e2a" },
+  { week:"Wk 5", name:"Dion Exam 2 — Retake", target:80, id:"e2b" },
+  { week:"Wk 5", name:"Dion Exam 3", target:80, id:"e3" },
+  { week:"Wk 6", name:"Dion Exam 4", target:85, id:"e4" },
+  { week:"Wk 6", name:"Dion Exam 5 — Final Sim", target:85, id:"e5" },
+  { week:"Wk 6", name:"Messer Final Practice Exam", target:85, id:"em" },
+];
 
-let completed = JSON.parse(localStorage.getItem('netplus_progress') || '{}');
+const PORTS = [
+  { port:"20/21", proto:"FTP", desc:"File Transfer Protocol — 20=data, 21=control" },
+  { port:"22", proto:"SSH", desc:"Secure Shell — encrypted remote access" },
+  { port:"23", proto:"Telnet", desc:"Unencrypted remote access — avoid, use SSH" },
+  { port:"25", proto:"SMTP", desc:"Send email — outbound mail server" },
+  { port:"53", proto:"DNS", desc:"Domain Name System — TCP + UDP" },
+  { port:"67/68", proto:"DHCP", desc:"Dynamic IP assignment — 67=server, 68=client" },
+  { port:"69", proto:"TFTP", desc:"Trivial FTP — UDP, no authentication" },
+  { port:"80", proto:"HTTP", desc:"Unencrypted web traffic" },
+  { port:"110", proto:"POP3", desc:"Email retrieval — downloads and deletes from server" },
+  { port:"119", proto:"NNTP", desc:"Network News Transfer Protocol" },
+  { port:"123", proto:"NTP", desc:"Network Time Protocol — UDP" },
+  { port:"137-139", proto:"NetBIOS", desc:"Windows networking — older file sharing" },
+  { port:"143", proto:"IMAP", desc:"Email retrieval — keeps mail on server" },
+  { port:"161/162", proto:"SNMP", desc:"Network monitoring — 161=poll, 162=trap" },
+  { port:"179", proto:"BGP", desc:"Border Gateway Protocol — TCP, internet routing" },
+  { port:"389", proto:"LDAP", desc:"Directory services — Active Directory" },
+  { port:"443", proto:"HTTPS", desc:"Encrypted web traffic — TLS" },
+  { port:"445", proto:"SMB", desc:"File sharing (Windows/Samba)" },
+  { port:"465/587", proto:"SMTPS", desc:"Secure SMTP — email submission" },
+  { port:"514", proto:"Syslog", desc:"System logging — UDP" },
+  { port:"636", proto:"LDAPS", desc:"LDAP over SSL" },
+  { port:"993", proto:"IMAPS", desc:"IMAP over SSL" },
+  { port:"995", proto:"POP3S", desc:"POP3 over SSL" },
+  { port:"1433", proto:"MSSQL", desc:"Microsoft SQL Server" },
+  { port:"1521", proto:"Oracle DB", desc:"Oracle database" },
+  { port:"1723", proto:"PPTP", desc:"Point-to-Point Tunneling Protocol — VPN" },
+  { port:"3306", proto:"MySQL", desc:"MySQL/MariaDB database" },
+  { port:"3389", proto:"RDP", desc:"Remote Desktop Protocol — Windows" },
+  { port:"5060/5061", proto:"SIP", desc:"Session Initiation Protocol — VoIP" },
+  { port:"8080", proto:"HTTP Alt", desc:"Alternate HTTP — web proxies" },
+];
 
-function saveProgress() {
-  localStorage.setItem('netplus_progress', JSON.stringify(completed));
+const SUBNETS = [
+  ["/8",  "255.0.0.0",       "16,777,214", "Class A — large enterprise/ISP"],
+  ["/16", "255.255.0.0",     "65,534",     "Class B — large campus network"],
+  ["/24", "255.255.255.0",   "254",        "Class C — typical LAN segment"],
+  ["/25", "255.255.255.128", "126",        "Split /24 in half"],
+  ["/26", "255.255.255.192", "62",         "Split /24 into quarters"],
+  ["/27", "255.255.255.224", "30",         "Small department/VLAN"],
+  ["/28", "255.255.255.240", "14",         "Small workgroup"],
+  ["/29", "255.255.255.248", "6",          "Very small segment"],
+  ["/30", "255.255.255.252", "2",          "Point-to-point WAN links"],
+  ["/31", "255.255.255.254", "0 (2 for P2P)", "Point-to-point (RFC 3021)"],
+  ["/32", "255.255.255.255", "1",          "Host route — single device"],
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let completed = JSON.parse(localStorage.getItem('np_completed') || '{}');
+let examScores = JSON.parse(localStorage.getItem('np_exams') || '{}');
+
+function save() {
+  localStorage.setItem('np_completed', JSON.stringify(completed));
+  localStorage.setItem('np_exams', JSON.stringify(examScores));
 }
 
-function getTotalDays() {
-  return plan.reduce((sum, w) => sum + w.days.length, 0);
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-CA', {year:'numeric',month:'short',day:'numeric'});
+  renderDomainPills();
+  renderTabs();
+  renderWeekPanels();
+  renderExamTracker();
+  renderPorts();
+  renderSubnets();
+  updateStats();
+
+  // Show first tab
+  switchTab('week-1');
 }
 
-function getCompletedCount() {
-  return Object.values(completed).filter(Boolean).length;
+function renderDomainPills() {
+  const el = document.getElementById('domainPills');
+  DOMAINS.forEach(d => {
+    const pill = document.createElement('div');
+    pill.className = 'domain-pill';
+    pill.style.color = d.color;
+    pill.style.borderColor = d.color + '44';
+    pill.style.background = d.color + '11';
+    pill.textContent = `${d.label} · ${d.pct} · Wk ${d.weeks}`;
+    el.appendChild(pill);
+  });
 }
 
-function updateProgress() {
-  const total = getTotalDays();
-  const done = getCompletedCount();
-  const pct = (done / total) * 100;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressCount').textContent = `${done} / ${total}`;
+function renderTabs() {
+  const bar = document.getElementById('tabBar');
+  WEEKS.forEach(w => {
+    const t = document.createElement('button');
+    t.className = 'tab';
+    t.id = `tab-week-${w.num}`;
+    t.textContent = `Week ${w.num}`;
+    t.style.setProperty('--tw', w.color);
+    t.onclick = () => switchTab(`week-${w.num}`);
+    bar.appendChild(t);
+  });
+  ['exams','ports','subnet'].forEach((id, i) => {
+    const labels = ['Exam Tracker','Ports Ref','Subnets'];
+    const t = document.createElement('button');
+    t.className = 'tab';
+    t.id = `tab-${id}`;
+    t.textContent = labels[i];
+    t.onclick = () => switchTab(id);
+    bar.appendChild(t);
+  });
 }
 
-function toggleDay(id) {
-  completed[id] = !completed[id];
-  saveProgress();
-  const card = document.querySelector(`[data-id="${id}"]`);
-  if (completed[id]) {
-    card.classList.add('completed');
-  } else {
-    card.classList.remove('completed');
-  }
-  updateProgress();
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+  const tab = document.getElementById(`tab-${id}`);
+  const panel = document.getElementById(`panel-${id}`);
+  if (tab) tab.classList.add('active');
+  if (panel) panel.classList.add('active');
 }
 
-function resetAll() {
-  if (confirm('Reset all progress?')) {
-    completed = {};
-    saveProgress();
-    document.querySelectorAll('.day-card').forEach(c => c.classList.remove('completed'));
-    updateProgress();
-  }
-}
+function renderWeekPanels() {
+  const container = document.getElementById('panels');
+  WEEKS.forEach(w => {
+    const panel = document.createElement('div');
+    panel.className = 'week-panel';
+    panel.id = `panel-week-${w.num}`;
 
-function render() {
-  const container = document.getElementById('weeks-container');
-  let dayIndex = 0;
+    const doneDays = w.days.filter((d,i) => completed[`${w.num}-${i}`]).length;
+    const totalDays = w.days.filter(d => !d.rest).length;
 
-  plan.forEach((week, wi) => {
-    const section = document.createElement('div');
-    section.className = 'week';
-
-    const header = document.createElement('div');
-    header.className = 'week-header';
-    header.innerHTML = `
-      <span class="week-number">Week ${week.week}</span>
-      <div class="week-line"></div>
-      <span class="week-title">${week.title}</span>
-      <span class="week-badge">${week.days.length} days</span>
-    `;
-    section.appendChild(header);
-
-    const grid = document.createElement('div');
-    grid.className = 'days-grid';
-
-    week.days.forEach((day, di) => {
-      const id = `w${wi}d${di}`;
-      const isDone = completed[id];
-      const card = document.createElement('div');
-      card.className = 'day-card' + (isDone ? ' completed' : '');
-      card.dataset.id = id;
-
-      card.innerHTML = `
-        <div>
-          <div class="day-label">${day.label}</div>
-          <div class="domain-tag ${tagColors[day.tag]}">${tagLabels[day.tag]}</div>
+    panel.innerHTML = `
+      <div class="week-complete" id="wc-${w.num}">
+        <span class="wc-icon">✅</span>
+        <span class="wc-text">Week ${w.num} complete! Move on to Week ${w.num < 6 ? w.num+1 : 'the real exam'}.</span>
+      </div>
+      <div class="week-header">
+        <div class="week-num" style="color:${w.color}">${w.num}</div>
+        <div class="week-info">
+          <div class="week-title" style="color:${w.color}">${w.title}</div>
+          <div class="week-goal">${w.goal}</div>
+          <div class="week-goal" style="margin-top:0.2rem;color:${w.color}88">${w.domain}</div>
         </div>
-        <div class="day-content">
-          <h3>${day.topic}</h3>
-          <div class="day-breakdown">
-            ${day.breakdown.map(b => `<div><span>→</span>${b}</div>`).join('')}
+        <div class="week-progress-mini" id="wp-${w.num}">${doneDays}/${totalDays} days</div>
+      </div>
+      <div class="day-grid" id="grid-${w.num}"></div>
+    `;
+    container.appendChild(panel);
+
+    renderDays(w);
+    updateWeekComplete(w.num);
+  });
+}
+
+function renderDays(w) {
+  const grid = document.getElementById(`grid-${w.num}`);
+  grid.innerHTML = '';
+  w.days.forEach((d, i) => {
+    const key = `${w.num}-${i}`;
+    const isDone = !!completed[key];
+    const isExamDay = !!d.examDay;
+
+    const card = document.createElement('div');
+    card.className = `day-card${isDone ? ' completed' : ''}${d.rest ? ' rest' : ''}`;
+    card.id = `card-${key}`;
+
+    const labelBg = isDone ? '#00ff9d' : (d.rest ? '#1a2230' : w.color);
+    const labelColor = isDone ? '#000' : (d.rest ? '#4a6070' : '#000');
+    const titleColor = isExamDay ? w.color : '';
+
+    card.innerHTML = `
+      <div class="day-header" onclick="toggleDay('${key}', event)">
+        <div class="day-label" style="background:${labelBg}22;color:${labelBg};border:1px solid ${labelBg}44">${d.day}</div>
+        <div class="day-title-wrap">
+          <div class="day-title" style="${titleColor ? 'color:'+titleColor+';font-weight:800' : ''}">${d.title}</div>
+          <div class="day-subtitle">${d.rest ? 'rest · recovery' : (d.videos !== '—' ? d.videos.split(';')[0].trim() : d.practice)}</div>
+        </div>
+        <div class="day-check" onclick="toggleDone('${key}', event)">
+          <span class="checkmark">✓</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-cols">
+          <div>
+            <div class="day-col-label">📺 Messer Videos</div>
+            <div class="day-col-val videos">${d.videos === '—' ? '<span style="color:var(--text3);font-style:italic">No videos today</span>' : d.videos}</div>
+          </div>
+          <div>
+            <div class="day-col-label">📝 Notes / Lab</div>
+            <div class="day-col-val notes${d.rest ? ' rest-text' : ''}">${d.notes}</div>
+          </div>
+          <div>
+            <div class="day-col-label">🎯 Practice</div>
+            <div class="day-col-val practice">${d.practice === '—' ? '<span style="color:var(--text3);font-style:italic">No exam today</span>' : d.practice}</div>
           </div>
         </div>
-        <div class="day-check">
-          <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-            <path d="M1 5L4.5 8.5L11 1" stroke="#0a0a0f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      `;
-
-      card.addEventListener('click', () => toggleDay(id));
-      grid.appendChild(card);
-      dayIndex++;
-    });
-
-    section.appendChild(grid);
-    container.appendChild(section);
+      </div>
+    `;
+    grid.appendChild(card);
   });
-
-  updateProgress();
 }
 
-render();
+function toggleDay(key, e) {
+  const card = document.getElementById(`card-${key}`);
+  card.classList.toggle('open');
+}
+
+function toggleDone(key, e) {
+  e.stopPropagation();
+  if (completed[key]) {
+    delete completed[key];
+  } else {
+    completed[key] = true;
+  }
+  save();
+
+  const card = document.getElementById(`card-${key}`);
+  card.classList.toggle('completed', !!completed[key]);
+  const parts = key.split('-');
+  const weekNum = parseInt(parts[0]);
+  updateWeekProgress(weekNum);
+  updateWeekComplete(weekNum);
+  updateStats();
+}
+
+function updateWeekProgress(weekNum) {
+  const w = WEEKS[weekNum - 1];
+  const doneDays = w.days.filter((d,i) => completed[`${weekNum}-${i}`]).length;
+  const totalDays = w.days.filter(d => !d.rest).length;
+  const el = document.getElementById(`wp-${weekNum}`);
+  if (el) el.textContent = `${doneDays}/${totalDays} days`;
+}
+
+function updateWeekComplete(weekNum) {
+  const w = WEEKS[weekNum - 1];
+  const nonRest = w.days.filter(d => !d.rest);
+  const allDone = nonRest.every((d, i) => {
+    const realIdx = w.days.indexOf(d);
+    return completed[`${weekNum}-${realIdx}`];
+  });
+  const banner = document.getElementById(`wc-${weekNum}`);
+  if (banner) banner.classList.toggle('show', allDone);
+}
+
+function updateStats() {
+  const totalDone = Object.keys(completed).length;
+  const totalNonRest = WEEKS.reduce((acc, w) => acc + w.days.filter(d => !d.rest).length, 0);
+  const pct = Math.round((totalDone / totalNonRest) * 100);
+
+  document.getElementById('statDays').textContent = totalDone;
+  document.getElementById('masterPct').textContent = pct + '%';
+  document.getElementById('masterFill').style.width = pct + '%';
+
+  // Current week
+  let currentWeek = '—';
+  for (let i = WEEKS.length - 1; i >= 0; i--) {
+    const w = WEEKS[i];
+    const anyDone = w.days.some((d, idx) => completed[`${w.num}-${idx}`]);
+    if (anyDone) { currentWeek = `Wk ${w.num}`; break; }
+  }
+  if (currentWeek === '—' && totalDone > 0) currentWeek = 'Wk 1';
+  document.getElementById('statWeek').textContent = currentWeek || 'Wk 1';
+
+  // Exam stats
+  const scores = Object.values(examScores).filter(v => v !== '' && !isNaN(parseFloat(v)));
+  document.getElementById('statExams').textContent = scores.length;
+  if (scores.length > 0) {
+    const avg = Math.round(scores.reduce((a, b) => a + parseFloat(b), 0) / scores.length);
+    document.getElementById('statAvg').textContent = avg + '%';
+  } else {
+    document.getElementById('statAvg').textContent = '—';
+  }
+}
+
+function renderExamTracker() {
+  const table = document.getElementById('examTable');
+  // Header
+  const thead = document.createElement('div');
+  thead.className = 'exam-row exam-thead';
+  thead.innerHTML = `
+    <div class="exam-cell">Week</div>
+    <div class="exam-cell">Practice Exam</div>
+    <div class="exam-cell" style="text-align:center">Your Score</div>
+    <div class="exam-cell" style="text-align:center">Target</div>
+  `;
+  table.appendChild(thead);
+
+  EXAMS.forEach((ex, idx) => {
+    const row = document.createElement('div');
+    row.className = 'exam-row';
+    const savedScore = examScores[ex.id] || '';
+    row.innerHTML = `
+      <div class="exam-cell week-cell">${ex.week}</div>
+      <div class="exam-cell exam-name">${ex.name}</div>
+      <div class="exam-cell" style="text-align:center">
+        <input class="score-input" id="score-${ex.id}" type="number" min="0" max="100" placeholder="—" value="${savedScore}">
+      </div>
+      <div class="exam-cell target" style="text-align:center">${ex.target}%+</div>
+    `;
+    table.appendChild(row);
+
+    setTimeout(() => {
+      const inp = document.getElementById(`score-${ex.id}`);
+      if (inp) {
+        updateScoreColor(inp, ex.target);
+        inp.addEventListener('input', () => {
+          examScores[ex.id] = inp.value;
+          save();
+          updateScoreColor(inp, ex.target);
+          updateStats();
+        });
+      }
+    }, 0);
+  });
+}
+
+function updateScoreColor(inp, target) {
+  const val = parseFloat(inp.value);
+  inp.classList.remove('pass','fail');
+  if (!isNaN(val)) {
+    inp.classList.add(val >= target ? 'pass' : 'fail');
+  }
+}
+
+function renderPorts() {
+  const grid = document.getElementById('portsGrid');
+  function render(filter = '') {
+    grid.innerHTML = '';
+    const filtered = PORTS.filter(p =>
+      p.proto.toLowerCase().includes(filter) || p.port.includes(filter) || p.desc.toLowerCase().includes(filter)
+    );
+    filtered.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'port-card';
+      card.innerHTML = `
+        <div class="port-num">${p.port}</div>
+        <div class="port-info">
+          <div class="port-proto">${p.proto}</div>
+          <div class="port-desc">${p.desc}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.75rem;color:var(--text3);padding:1rem">No results found.</div>';
+    }
+  }
+  render();
+  document.getElementById('portSearch').addEventListener('input', e => render(e.target.value.toLowerCase().trim()));
+}
+
+function renderSubnets() {
+  const tbody = document.getElementById('subnetBody');
+  SUBNETS.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = row.map(cell => `<td>${cell}</td>`).join('');
+    tbody.appendChild(tr);
+  });
+}
+
+// ── BOOT ────────────────────────────────────────────────────────────────────
+init();
 </script>
 </body>
 </html>
